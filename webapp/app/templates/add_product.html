@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main id="main" class="container" role="main">
+	<!-- ======= Breadcrumbs ======= -->
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page"><a>Accueil</a></li>
+			<li class="breadcrumb-item active" aria-current="page"><a>Liste produits</a></li>
+			<li class="breadcrumb-item active" aria-current="page"><a>Ajouter un produis</a></li>
+		</ol>
+	</nav><!-- End Breadcrumbs -->
+
+	<section class="inner-page">
+		<div class="container">
+			<div class="page-holder d-flex align-items-center">
+				<div class="container">
+					<div class="row align-items-center py-5">
+						<form id="cenamafs_form" class="mt-4" method="post">
+							{{ form.non_field_errors }}
+							{% csrf_token %}
+							{% for field in form %}
+							{% if forloop.counter0|divisibleby:"2" %}<div class="row"> {% endif %}
+								<div class="col-md-6 form-group mb-4">
+									{{ field.errors }}
+									{{ field.label_tag }}
+									{{ field }}
+								</div>
+								{% if not forloop.counter0|divisibleby:"2" or forloop.last %}
+							</div> {% endif %}
+							{% endfor %}
+							<button type="submit" class="btn btn-primary shadow px-5">
+								ajouter
+							</button>
+							<button type="reset" class="btn btn-warning shadow px-5">
+								tout effacer
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<main id="main" class="container" role="main">
+	<!-- ======= Breadcrumbs ======= -->
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'app:home' %}">Accueil</a></li>
+			<li class="breadcrumb-item active" aria-current="page">
+				<a>{{ user_info.last_name|capfirst }} {{ user_info.first_name|capfirst }}</a>
+			</li>
+		</ol>
+	</nav>
+	<!-- End Breadcrumbs -->
+
+	<section class="inner-page">
+		<div class="container">
+			<br><br>
+			<div class="container">
+				<div class="col-lg-10">
+					<div class="card mb-4">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Nom complet</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0">
+										{{ user_info.last_name|capfirst }} {{ user_info.first_name|capfirst }}
+									</p>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Adresse courriel</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0">{{ user_info.email }}</p>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">login</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0">{{ user_info.username }}</p>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Numéro de téléphone</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0">{{ user_info.phone }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br><br><br><br>
+			</div>
+	</section>
+</main>
+<!-- End #main -->
+
+{% endblock %}
+{% block jscontent %}
+{% endblock jscontent %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+{% endblock stylesheets %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+<main id="main" class="container" role="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a>Accueil</a></li>
+        </ol>
+    </nav><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+        <div class="container">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert" id="alert">
+                {{message}}
+            </div>
+            {% endfor %}
+            <br><br>
+            {% endif %}
+            {% if a_user.is_admin %}
+            <div class="position-relative">
+                <a href="{% url 'app:add_product' %}" class="btn btn-primary position-absolute top-0 start-0">
+                    Nouveau produit
+                </a>
+            </div>
+            {% endif %}
+            <br><br>
+            <div class="d-flex justify-content-between">
+                <form action="{# url 'cenamafs:user_list' #}" method="get">
+                    <input class="form-control border-0 shadow" name="q" type="text" placeholder="Recherche..." />
+                </form>
+            </div>
+            <br><br>
+            {% if products and products.results %}
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Disponibilité</th>
+                        <th></th>
+                        {% if a_user.is_auth and not a_user.is_admin %}
+                        <th></th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products.results %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ product.designation|capfirst }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            {% if product.stock %} En stock {% else %} En rupture {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'app:product' product.id %}" class="btn btn-success">
+                                Détails
+                            </a>
+                        </td>
+                        {% if a_user.is_auth and not a_user.is_admin %}
+                        <td>
+                            <a href="{% url 'app:make_order' product.id %}" class="btn btn-primary">
+                                Ajouter
+                            </a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br><br>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if products.previous %}
+                    <li class="page-item">
+                        <a href="{% url 'app:next_page' previous %}" class="page-link">Précédent</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">Précédent</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item">
+                        <a class="page-link">{{ effectifs.number }} / {{ products.count }}</a>
+                    </li>
+                    {% if products.next %}
+                    <li class="page-item">
+                        <a href="{% url 'app:next_page' next %}" class="page-link" page-link">Suivant</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">Suivant</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% else %}
+            <p>Aucun effectif saisi.</p>
+            {% endif %}
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+{% endblock %}
