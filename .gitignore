@@ -4,4 +4,4 @@ env/
 *.vscode
 *.json
 *__pycache__/
-*migrations/
+*.http
