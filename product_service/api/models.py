@@ -6,7 +6,7 @@ from django.db import models
 class Product(models.Model):
     """ """
 
-    designation = models.CharField(max_length=150, unique=True)
+    designation = models.CharField("Désignation", max_length=150, unique=True)
     description = models.TextField()
     price = models.FloatField("Prix (en Franc CFA)")
     stock = models.FloatField("Stock")
